@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-12 animate-fade">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+        <div>
+            <h1 class="text-6xl font-black tracking-tighter text-slate-900 mb-2">Academic Audit</h1>
+            <p class="text-blue-600 font-extrabold uppercase tracking-widest text-[10px]">Session-by-session history for Learner: <span class="text-blue-800 font-extrabold">{{ student.name }}</span> | NIT KKR Academic Status</p>
+        </div>
+    </div>
+
+    <!-- Attendance Table -->
+    <div class="premium-card p-0 overflow-hidden overflow-x-auto border-blue-50 shadow-2xl bg-white">
+        <table class="premium-table">
+            <thead class="bg-blue-50/30">
+                <tr>
+                    <th class="w-1/4 text-blue-800">Date of Session</th>
+                    <th class="w-1/4 text-blue-800">Institutional Subject</th>
+                    <th class="w-1/4 text-blue-800">Authorized Faculty</th>
+                    <th class="w-1/4 text-blue-800">Status Verification</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if history %}
+                    {% for h in history %}
+                    <tr class="group hover:bg-blue-50/50 transition-colors border-b border-blue-50 last:border-0">
+                        <td class="pl-8"><p class="font-black text-slate-800 leading-tight uppercase tracking-widest text-[10px]">{{ h.date }}</p></td>
+                        <td><p class="font-black text-blue-600 leading-tight uppercase tracking-widest text-xs">{{ h.subject_name }}</p></td>
+                        <td><p class="font-bold text-slate-400 leading-tight uppercase tracking-widest text-[10px]">{{ h.teacher_name or "Official Registry" }}</p></td>
+                        <td>
+                            {% if h.status == 'Present' %}
+                                <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black bg-blue-50 text-blue-600 uppercase tracking-[0.1em]">Verified Attendance ✅</span>
+                            {% else %}
+                                <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black bg-rose-50 text-rose-500 uppercase tracking-[0.1em]">Class Missed ⚠️</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="py-32 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest animate-pulse italic">No academic sessions discovered in your institutional history log</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

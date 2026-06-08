@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap');
+
+:root {
+    --bg-light: #fdfcfb; /* Soft Pearl */
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --accent-primary: #f472b6; /* Elegant Blush Pink */
+    --accent-secondary: #fbbf24; /* Soft Gold */
+    --accent-success: #10b981; /* Mint Emerald */
+    --accent-danger: #f43f5e; /* Coral Rose */
+    --text-main: #1e293b; /* Deep Slate */
+    --text-dim: #64748b;
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: var(--font-body);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.6;
+}
+
+/* Elegant Background Blobs (Light Mode) */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 900px;
+    height: 900px;
+    border-radius: 50%;
+    filter: blur(150px);
+    z-index: -1;
+    opacity: 0.2;
+    pointer-events: none;
+    animation: blobFloat 25s infinite alternate ease-in-out;
+}
+
+body::before {
+    top: -400px;
+    right: -300px;
+    background: radial-gradient(circle, #f472b6, transparent 70%); /* Blush */
+}
+
+body::after {
+    bottom: -400px;
+    left: -300px;
+    background: radial-gradient(circle, #fbbf24, transparent 70%); /* Gold */
+    animation-delay: -12s;
+}
+
+@keyframes blobFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(100px, 150px) scale(1.15); }
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    color: #0f172a;
+}
+
+/* Premium Light Navigation */
+nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-bottom: 1px solid rgba(244, 114, 182, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-text {
+    font-size: 1.75rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #f472b6, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.04em;
+    font-family: var(--font-heading);
+}
+
+/* Elegant Light Cards */
+.premium-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 40px;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 20px 40px -10px rgba(244, 114, 182, 0.08); /* Soft Pink Shadow */
+    padding: 3.5rem;
+}
+
+.premium-card:hover {
+    border-color: rgba(244, 114, 182, 0.3);
+    transform: translateY(-8px);
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.1);
+}
+
+/* Sophisticated Button (Blush) */
+.btn-premium {
+    background: linear-gradient(135deg, #f472b6, #ec4899);
+    color: white;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.8rem;
+    padding: 1.25rem 3rem;
+    border-radius: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 15px 30px -10px rgba(244, 114, 182, 0.3);
+}
+
+.btn-premium:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px -12px rgba(244, 114, 182, 0.5);
+    filter: brightness(1.1);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f43f5e, #e11d48) !important;
+    box-shadow: 0 15px 30px -10px rgba(244, 63, 94, 0.3) !important;
+}
+
+/* Refined Light Mode Tables */
+.premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 1rem;
+}
+
+.premium-table th {
+    padding: 1rem 2rem;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    text-align: left;
+}
+
+.premium-table tr td {
+    background: white;
+    padding: 2rem 2rem;
+    border-top: 1px solid rgba(244, 114, 182, 0.05);
+    border-bottom: 1px solid rgba(244, 114, 182, 0.05);
+    transition: all 0.3s ease;
+}
+
+.premium-table tr td:first-child {
+    border-left: 1px solid rgba(244, 114, 182, 0.05);
+    border-radius: 24px 0 0 24px;
+}
+
+.premium-table tr td:last-child {
+    border-right: 1px solid rgba(244, 114, 182, 0.05);
+    border-radius: 0 24px 24px 0;
+}
+
+.premium-table tr:hover td {
+    background: #fdf2f8; /* Soft Blush Highlight */
+}
+
+/* Airy Inputs */
+input, select {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 20px !important;
+    color: var(--text-main) !important;
+    padding: 1rem 1.5rem !important;
+    transition: all 0.3s ease !important;
+}
+
+input:focus, select:focus {
+    border-color: #f472b6 !important;
+    box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.1) !important;
+}
+
+/* Modal System */
+.fixed.inset-0 {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+/* Animations */
+.animate-fade {
+    animation: fadeIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Smartphone Optimizations */
+@media (max-width: 768px) {
+    .premium-card {
+        padding: 1.5rem !important;
+        border-radius: 24px !important;
+    }
+
+    .btn-premium {
+        padding: 1rem 1.5rem !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 0.1em !important;
+    }
+
+    h1 {
+        font-size: 3rem !important;
+        line-height: 1.1 !important;
+    }
+
+    .nav-container {
+        padding: 1rem !important;
+    }
+
+    .logo-text {
+        font-size: 1.1rem !important;
+    }
+
+    .premium-table tr td {
+        padding: 1rem !important;
+        font-size: 0.8rem;
+    }
+
+    .text-8xl {
+        font-size: 3.5rem !important;
+    }
+}

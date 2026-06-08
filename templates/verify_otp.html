@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto py-32 animate-fade">
+    <div class="premium-card p-12 text-center border-blue-100 shadow-2xl">
+        <div class="h-16 w-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-inner">
+            <svg class="h-8 w-8 text-blue-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        
+        <h1 class="text-4xl font-black mb-2 text-slate-900 tracking-tighter">Enter Code</h1>
+        <p class="text-slate-500 font-extrabold uppercase tracking-widest text-[10px] mb-12">Institutional 6-Digit OTP sent to your NIT KKR inbox.</p>
+        
+        <form method="POST" action="{{ url_for('auth.verify_otp') }}" class="space-y-12">
+            <input class="w-full text-center h-24 bg-blue-50/50 border border-blue-100 rounded-3xl px-6 text-slate-800 text-6xl font-black tracking-[0.3em] focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all font-mono placeholder:text-slate-200" 
+                   id="otp" type="text" name="otp" placeholder="000000" maxlength="6" required autofocus>
+
+            <button class="btn-premium w-full h-16 uppercase tracking-[0.5em] font-black text-xs shadow-xl" type="submit">
+                Finalize Verification →
+            </button>
+        </form>
+
+        <div class="mt-12 text-center pt-8 border-t border-blue-50">
+            <a href="{{ url_for('auth.login') }}" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-blue-600 transition-colors">Request New Credentials</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

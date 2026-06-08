@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIT KKR | Smart Attendance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    {% if session.get('role') == 'admin' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    {% elif session.get('role') == 'teacher' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
+    {% elif session.get('role') == 'student' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+    {% endif %}
+</head>
+<body class="flex flex-col min-h-screen">
+{% if request.endpoint != 'index' and request.endpoint != 'auth.login' %}
+    <nav>
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="{{ url_for('index') }}" class="logo-text uppercase">Smart Attendance</a>
+            
+            <div class="flex items-center gap-6">
+                {% if session.get('user') %}
+                    <div class="hidden md:flex items-center gap-4 py-2 px-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ session.get('role') }} Portal</span>
+                        <span class="text-sm font-bold text-slate-900">{{ session.get('user') }}</span>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        {% if session.get('role') == 'admin' %}
+                            <a href="{{ url_for('admin.dashboard') }}" class="text-xs font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition-colors">Dashboard</a>
+                        {% elif session.get('role') == 'teacher' %}
+                            <a href="{{ url_for('teacher.dashboard') }}" class="text-xs font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition-colors">Dashboard</a>
+                        {% elif session.get('role') == 'student' %}
+                            <a href="{{ url_for('student.dashboard') }}" class="text-xs font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition-colors">Dashboard</a>
+                        {% endif %}
+                        <a href="{{ url_for('auth.logout') }}" class="text-xs font-black uppercase tracking-widest text-rose-500 hover:text-rose-600 ml-4 transition-colors">Logout</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn-premium">Sign In →</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <main class="flex-grow">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="mb-8 p-6 rounded-3xl border flex items-center justify-between animate-fade shadow-sm
+                        {% if category == 'success' %} bg-emerald-50 border-emerald-100 text-emerald-700
+                        {% elif category == 'error' %} bg-rose-50 border-rose-100 text-rose-700
+                        {% else %} bg-indigo-50 border-indigo-100 text-indigo-700 {% endif %}">
+                        <p class="font-black text-sm tracking-wide">{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% if error_block %}
+            <div class="text-center py-32 animate-fade">
+                <h1 class="text-8xl font-black mb-4 opacity-5">{{ title }}</h1>
+                <p class="text-slate-500 text-lg mb-10">{{ error_block }}</p>
+                <a href="{{ url_for('index') }}" class="btn-premium">Return to Home</a>
+            </div>
+            {% else %}
+                {% block content %}{% endblock %}
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

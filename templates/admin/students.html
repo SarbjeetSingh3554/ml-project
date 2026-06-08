@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-12 animate-fade">
+    <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+        <div>
+            <h1 class="text-6xl font-black tracking-tighter text-slate-900 mb-2">Student Registry</h1>
+            <p class="text-blue-600 font-extrabold uppercase tracking-widest text-[10px]">Official Enrollment & Facial Biometric Directory</p>
+        </div>
+        <button onclick="document.getElementById('student-modal').classList.remove('hidden')" class="btn-premium px-10 h-16 flex items-center justify-center uppercase tracking-widest text-[10px] font-black">Add New Student +</button>
+    </div>
+
+    <!-- Student Table -->
+    <div class="premium-card p-0 overflow-hidden overflow-x-auto border-blue-50 shadow-2xl">
+        <table class="premium-table">
+            <thead>
+                <tr class="bg-blue-50/30">
+                    <th class="w-1/4">Full Name</th>
+                    <th class="w-1/6">Roll Number</th>
+                    <th class="w-1/6">Class</th>
+                    <th class="w-1/6 text-center">Status</th>
+                    <th class="w-1/6 text-right">Management</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr class="hover:bg-blue-50/50 transition-colors border-b border-blue-50 last:border-0">
+                    <td>
+                        <div class="flex items-center gap-4">
+                            <div class="h-10 w-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black uppercase shadow-sm">{{ student.name[0] }}</div>
+                            <p class="font-black text-slate-900">{{ student.name }}</p>
+                        </div>
+                    </td>
+                    <td><code class="text-[10px] font-black text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 uppercase tracking-widest">{{ student.roll_no }}</code></td>
+                    <td><p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">{{ student.class_name }}</p></td>
+                    <td class="text-center">
+                        {% if student.encodings %}
+                            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black bg-emerald-50 text-emerald-600 uppercase tracking-widest border border-emerald-100/50">Verified</span>
+                        {% else %}
+                            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black bg-blue-50 text-blue-500 uppercase tracking-widest border border-blue-100/50">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-right p-4">
+                        <form action="{{ url_for('admin.delete_student', roll_no=student.roll_no) }}" method="POST" onsubmit="return confirm('WARNING: Are you sure you want to permanently remove this student record?')">
+                            <button type="submit" class="text-rose-500 hover:text-rose-600 font-extrabold uppercase tracking-widest text-[9px] transition-colors bg-rose-50 px-4 py-2 rounded-xl">Remove Record</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Enrollment Modal (Full Screen Upgrade) -->
+    <div id="student-modal" class="hidden fixed inset-0 z-[9999]">
+        <div class="fs-modal">
+            <div class="max-w-4xl mx-auto w-full">
+                <div class="flex justify-between items-start mb-20">
+                    <div>
+                        <h2 class="text-6xl font-black text-slate-900 tracking-tighter mb-4">Add Student</h2>
+                        <p class="text-blue-600 font-black text-[12px] uppercase tracking-[0.4em]">Official Biometric Enrollment Pipeline</p>
+                    </div>
+                    <button onclick="document.getElementById('student-modal').classList.add('hidden')" class="text-slate-400 hover:text-rose-500 transition-colors">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                
+                <form action="{{ url_for('admin.manage_students') }}" method="POST" enctype="multipart/form-data" class="space-y-16">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4 ml-1">Full Name</label>
+                            <input type="text" name="name" placeholder="Full Student Name" class="w-full h-20 bg-blue-50 border border-blue-100 rounded-[24px] px-8 text-slate-900 text-xl font-bold focus:outline-none focus:ring-8 focus:ring-blue-500/5 transition-all" required>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4 ml-1">Roll Number</label>
+                            <input type="text" name="roll_no" placeholder="Institutional ID" class="w-full h-20 bg-blue-50 border border-blue-100 rounded-[24px] px-8 text-slate-900 text-xl font-bold focus:outline-none focus:ring-8 focus:ring-blue-500/5 transition-all" required>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4 ml-1">Email Address</label>
+                            <input type="email" name="email" placeholder="example@nitkkr.ac.in" class="w-full h-20 bg-blue-50 border border-blue-100 rounded-[24px] px-8 text-slate-900 text-xl font-bold focus:outline-none focus:ring-8 focus:ring-blue-500/5 transition-all" required>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4 ml-1">Class/Section</label>
+                            <select name="class_id" class="w-full h-20 bg-blue-50 border border-blue-100 rounded-[24px] px-8 text-slate-900 text-xl font-bold focus:outline-none focus:ring-8 focus:ring-blue-500/5 appearance-none cursor-pointer" required>
+                                <option value="" disabled selected>-- Select Official Course --</option>
+                                {% for cls in classes %}
+                                <option value="{{ cls._id }}">{{ cls.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6 ml-1">Biometric Portrait Upload (Max 5 Images)</label>
+                        <div class="relative cursor-pointer border-2 border-dashed border-blue-100 rounded-[40px] p-20 bg-blue-50/30 hover:bg-blue-50 hover:border-blue-400 transition-all text-center">
+                            <div id="upload-box-content">
+                                <p class="text-2xl font-black text-slate-400 uppercase tracking-widest mb-2">Drop Portrait Samples Here</p>
+                                <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest">JPG, PNG, OR WEBP FORMATS</p>
+                            </div>
+                            <input type="file" name="photos" id="photo-input" class="absolute inset-0 opacity-0 cursor-pointer" multiple accept="image/*" required onchange="updateFileLabel(this)">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-8 pt-12">
+                        <button type="button" onclick="document.getElementById('student-modal').classList.add('hidden')" class="px-12 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.5em] hover:text-rose-500 transition-colors">Discard</button>
+                        <button type="submit" class="btn-premium flex-1 h-20 text-[10px] font-black uppercase tracking-widest shadow-2xl">Finalize Enrollment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateFileLabel(input) {
+    const content = document.getElementById('upload-box-content');
+    if (input.files.length > 0) {
+        content.innerHTML = `
+            <p class="text-blue-600 font-black text-2xl uppercase tracking-widest mb-2">✓ ${input.files.length} Photos Prepared</p>
+            <p class="text-slate-400 text-[10px] uppercase font-bold tracking-widest">Selected: ${Array.from(input.files).map(f => f.name).join(', ').substring(0, 60)}...</p>
+        `;
+    } else {
+        content.innerHTML = `
+            <p class="text-2xl font-black text-slate-400 uppercase tracking-widest mb-2">Drop Portrait Samples Here</p>
+            <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest">JPG, PNG, OR WEBP FORMATS</p>
+        `;
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap');
+
+:root {
+    --bg-finance: #F5F9FF;
+    --bg-gradient: linear-gradient(135deg, #F4F9FF 0%, #E6F0FF 100%);
+    --surface: #FFFFFF;
+    --surface-dim: #EEF4FF;
+    --pri-blue: #2563EB;
+    --pri-blue-dark: #1D4ED8;
+    --pri-blue-deep: #1E3A8A;
+    --pri-blue-light: #BFDBFE;
+    --border-finance: #E2ECFF;
+    --text-primary: #0B1324;
+    --text-secondary: #334155;
+    --text-dim: #6B7280;
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Soft Finance Glows */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 900px;
+    height: 900px;
+    border-radius: 50%;
+    filter: blur(160px);
+    z-index: -1;
+    opacity: 0.4;
+    pointer-events: none;
+    animation: blobFloat 25s infinite alternate ease-in-out;
+}
+
+body::before {
+    top: -400px;
+    right: -300px;
+    background: radial-gradient(circle, var(--pri-blue-light), transparent 70%);
+}
+
+body::after {
+    bottom: -400px;
+    left: -300px;
+    background: radial-gradient(circle, #E0E7FF, transparent 70%);
+    animation-delay: -12s;
+}
+
+@keyframes blobFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(100px, 150px) scale(1.1); }
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+/* Premium Navigation */
+nav {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-finance);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--pri-blue-deep), var(--pri-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.04em;
+    font-family: var(--font-heading);
+}
+
+/* Soft Finance Card System */
+.premium-card {
+    background: var(--surface);
+    border: 1px solid var(--border-finance);
+    border-radius: 32px;
+    box-shadow: 0 10px 40px -10px rgba(37, 99, 235, 0.05);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.premium-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--pri-blue-light);
+    box-shadow: 0 40px 80px -20px rgba(37, 99, 235, 0.12);
+}
+
+/* Finance Buttons */
+.btn-premium {
+    background: linear-gradient(135deg, var(--pri-blue), var(--pri-blue-deep));
+    color: white;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 1rem 2.5rem;
+    border-radius: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.3);
+    filter: brightness(1.1);
+}
+
+/* Finance Table Architecture */
+.premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.75rem;
+}
+
+.premium-table th {
+    padding: 1rem;
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: left;
+}
+
+.premium-table td {
+    background: var(--surface);
+    color: var(--text-secondary);
+    padding: 1.5rem 1rem;
+    border-top: 1px solid var(--border-finance);
+    border-bottom: 1px solid var(--border-finance);
+}
+
+.premium-table tr td:first-child {
+    border-left: 1px solid var(--border-finance);
+    border-radius: 20px 0 0 20px;
+}
+
+.premium-table tr td:last-child {
+    border-right: 1px solid var(--border-finance);
+    border-radius: 0 20px 20px 0;
+}
+
+/* Finance Forms */
+input, select {
+    background: var(--surface-dim) !important;
+    border: 1px solid var(--border-finance) !important;
+    border-radius: 16px !important;
+    padding: 0.8rem 1.2rem !important;
+    font-size: 0.9rem !important;
+    color: var(--text-primary) !important;
+}
+
+input:focus, select:focus {
+    border-color: var(--pri-blue) !important;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1) !important;
+}
+
+/* Full Screen Modal Architecture - Finance Upgrade */
+.fs-modal {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-finance);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    padding: 4rem;
+    overflow-y: auto;
+    animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(100vh); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

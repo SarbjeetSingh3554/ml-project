@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="h-[calc(100vh-80px)] flex flex-col items-center justify-center animate-fade">
+    <div class="premium-card w-full max-w-xl relative overflow-hidden backdrop-blur-3xl border-blue-100 shadow-2xl">
+        <!-- Brand Recognition Orbs (Finance Mode) -->
+        <div class="absolute -top-24 -left-24 w-48 h-48 bg-blue-500/5 blur-3xl rounded-full"></div>
+        <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-blue-500/10 blur-3xl rounded-full"></div>
+
+        <div class="relative z-10 text-center p-10">
+            <!-- Explicit Labeling per User Request -->
+            <h1 class="text-6xl font-black mb-2 text-slate-900 tracking-tighter">
+                {% if role == 'admin' %}Administrator Login
+                {% elif role == 'teacher' %}Faculty Portal Login
+                {% elif role == 'student' %}Student Profile Gateway
+                {% else %}System Verification
+                {% endif %}
+            </h1>
+            <p class="text-blue-600 font-black mb-12 text-[10px] uppercase tracking-[0.5em]">NIT Kurukshetra | Biometric Credential Gate</p>
+            
+            <form action="{{ url_for('auth.login') }}" method="POST" class="space-y-8 text-left">
+                <input type="hidden" name="role" value="{{ role }}">
+                
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-[0.6em] text-blue-600/60 mb-4 ml-1">Account Identity</label>
+                    <input type="email" name="email" placeholder="Institutional Email" 
+                           class="w-full h-16 bg-blue-50/50 border border-blue-100 rounded-[28px] px-8 text-slate-800 text-lg font-bold focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-300" required>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="btn-premium w-full h-16 tracking-[0.6em] font-black text-xs">
+                        Generate Verification Code →
+                    </button>
+                    <p class="text-center mt-8">
+                        <a href="{{ url_for('index') }}" class="text-[10px] uppercase font-black tracking-widest text-slate-400 hover:text-blue-600 transition-colors">← Return to Portal Hub</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Institutional Compliance Label -->
+    <div class="mt-12 text-center">
+        <p class="text-[10px] font-black text-slate-300 uppercase tracking-[1em] opacity-60">National Institute of Technology Kurukshetra</p>
+    </div>
+</div>
+{% endblock %}

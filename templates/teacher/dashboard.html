@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-12 animate-fade">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+        <div>
+            <h1 class="text-6xl font-black tracking-tighter text-slate-900 mb-2">Faculty Portal</h1>
+            <p class="text-blue-600 font-extrabold uppercase tracking-widest text-[10px]">Professor <span class="text-blue-800 font-black">{{ teacher.name }}</span> | Portal Access</p>
+        </div>
+        <div class="flex gap-4">
+            <a href="{{ url_for('teacher.reports') }}" class="btn-premium px-8 h-14 flex items-center justify-center uppercase tracking-widest text-[10px] bg-blue-600">Attendance History</a>
+            <a href="{{ url_for('teacher.setup_attendance') }}" class="btn-premium px-8 h-14 flex items-center justify-center uppercase tracking-widest text-[10px] bg-blue-600">Mark Attendance</a>
+        </div>
+    </div>
+
+    <!-- Active Subjects -->
+    <h3 class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-8 border-b border-blue-50 pb-2">Institutional Course Access</h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {% if subjects %}
+            {% for sub in subjects %}
+            <div class="premium-card p-10 flex flex-col justify-between group hover:border-blue-200 bg-white">
+                <div class="flex items-start justify-between mb-8">
+                    <div>
+                        <h4 class="text-3xl font-black text-slate-900 mb-2 leading-tight group-hover:text-blue-600 transition-colors">{{ sub.name }}</h4>
+                        <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest">{{ sub.class_name }}</p>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-blue-50 flex items-center justify-between">
+                    <div class="text-left">
+                        <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">Total Classes</p>
+                        <p class="text-4xl font-black text-slate-900">{{ sub.total_lectures }}<span class="text-xs text-blue-600/30 ml-1">/ 34</span></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-span-full py-32 text-center premium-card border-dashed border-blue-100 bg-white/50">
+                <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest animate-pulse">Waiting for Academic Registrar Mappings...</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

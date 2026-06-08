@@ -1,0 +1,18 @@
+/* Admin Portal Specific Styles */
+:root {
+    --admin-accent: var(--pri-blue);
+    --admin-gradient: linear-gradient(135deg, var(--pri-blue-deep), var(--pri-blue));
+}
+
+.btn-admin {
+    background: var(--admin-gradient);
+    color: white;
+}
+
+.admin-card {
+    border-left: 4px solid var(--admin-accent);
+}
+
+.metric-card-admin {
+    background: var(--surface);
+}

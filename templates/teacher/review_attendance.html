@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-12 animate-fade max-w-5xl mx-auto">
+    <div class="mb-16">
+        <h1 class="text-6xl font-black tracking-tighter text-slate-800 mb-2">Final Review</h1>
+        <p class="text-slate-500 font-extrabold uppercase tracking-widest text-[10px]">Verify students before making this academic record permanent.</p>
+    </div>
+
+    <!-- Alert Box -->
+    <div class="bg-amber-50 border border-amber-200 rounded-3xl p-8 mb-12 flex items-center gap-6">
+        <div class="bg-amber-500 text-white rounded-full p-4 h-12 w-12 flex items-center justify-center font-black text-xl">!</div>
+        <div>
+            <h4 class="text-slate-800 font-black uppercase tracking-widest text-[10px] mb-2">Persistence Required</h4>
+            <p class="text-slate-600 text-sm font-medium">To keep this attendance in NIT KKR logs, you must click the <b>SAVE PERMANENT RECORD</b> button at the bottom. Exiting now will discard the current AI scan.</p>
+        </div>
+    </div>
+
+    <form action="{{ url_for('teacher.review_attendance') }}" method="POST">
+        <div class="premium-card p-0 overflow-hidden shadow-2xl border-pink-100">
+            <div class="bg-pink-50 p-8 border-b border-pink-100">
+                <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest">Attendance Sheet</h3>
+            </div>
+            
+            <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for student in students %}
+                    <label class="flex items-center gap-4 p-5 rounded-2xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer group">
+                        <input type="checkbox" name="present_rolls" value="{{ student.roll_no }}" 
+                               {% if student.roll_no in data.present_rolls %} checked {% endif %}
+                               class="accent-pink-500 h-6 w-6 rounded-lg">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-black text-slate-800 group-hover:text-pink-500 transition-colors">{{ student.name }}</span>
+                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ student.roll_no }}</span>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 flex flex-col items-center gap-6">
+            <button type="submit" class="btn-premium w-full md:w-96 h-20 text-sm font-black tracking-widest uppercase shadow-2xl bg-gradient-to-br from-pink-500 to-rose-600 hover:scale-105 active:scale-95 transition-all">
+                ✅ SAVE PERMANENT RECORD →
+            </button>
+            <a href="{{ url_for('teacher.dashboard') }}" class="text-[10px] font-black text-slate-400 hover:text-rose-500 transition-colors uppercase tracking-widest">Discard Session</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

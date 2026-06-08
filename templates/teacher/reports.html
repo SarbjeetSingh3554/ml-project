@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-12 animate-fade">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+        <div>
+            <h1 class="text-6xl font-black tracking-tighter text-slate-900 mb-2">Audit Logs</h1>
+            <p class="text-blue-600 font-extrabold uppercase tracking-widest text-[10px]">Institutional review of academic session historical data.</p>
+        </div>
+    </div>
+
+    <!-- Reports Table -->
+    <div class="premium-card p-0 overflow-hidden overflow-x-auto border-blue-50 shadow-xl bg-white">
+        <table class="premium-table">
+            <thead class="bg-blue-50/30">
+                <tr>
+                    <th class="w-1/4 text-blue-800">Date of Session</th>
+                    <th class="w-1/4 text-blue-800">Division/Class</th>
+                    <th class="w-1/4 text-blue-800">Course Subject</th>
+                    <th class="w-1/8 text-blue-800">Attendance</th>
+                    <th class="w-1/8 text-right text-blue-800 pr-8">Management</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if logs %}
+                    {% for log in logs %}
+                    <tr class="group border-b border-blue-50 last:border-0 hover:bg-blue-50/50 transition-colors">
+                        <td class="pl-8"><p class="font-black text-slate-800 leading-tight uppercase tracking-widest text-xs">{{ log.date }}</p></td>
+                        <td><p class="font-bold text-blue-600 leading-tight uppercase tracking-widest text-[10px]">{{ log.class_name }}</p></td>
+                        <td><p class="font-black text-slate-900 leading-tight uppercase tracking-widest text-xs">{{ log.subject_name }}</p></td>
+                        <td><span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black bg-blue-50 text-blue-600 uppercase tracking-widest border border-blue-100/50">{{ log.present_count }} Verified</span></td>
+                        <td class="text-right pr-8">
+                            <form action="{{ url_for('teacher.delete_attendance', att_id=log._id|string) }}" method="POST" onsubmit="return confirm('WARNING: Are you sure you want to remove this academic record? This will decrement the lecture count.')">
+                                <button type="submit" class="text-rose-500 hover:text-rose-600 font-extrabold uppercase tracking-widest text-[9px] transition-colors bg-rose-50 px-4 py-2 rounded-xl">Remove Record</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="py-32 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest italic animate-pulse">No institutional records discovered in this semester phase</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

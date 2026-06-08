@@ -1,0 +1,24 @@
+/* Teacher Portal Specific Styles */
+:root {
+    --teacher-accent: var(--pri-blue);
+    --teacher-gradient: linear-gradient(135deg, var(--pri-blue), var(--pri-blue-dark));
+}
+
+.btn-teacher {
+    background: var(--teacher-gradient);
+    color: white;
+    font-weight: 800;
+}
+
+.teacher-card {
+    border-left: 4px solid var(--teacher-accent);
+}
+
+#photo-preview {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 24px;
+    margin-top: 1rem;
+    border: 2px solid var(--teacher-accent);
+}
