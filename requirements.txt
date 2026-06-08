@@ -1,0 +1,14 @@
+numpy==1.26.4
+insightface==0.7.3
+onnxruntime==1.17.1
+opencv-python-headless==4.9.0.80
+pillow
+flask
+flask-pymongo
+gunicorn
+python-dotenv
+cloudinary
+pymongo[srv]
+scipy
+dnspython
+asgiref
